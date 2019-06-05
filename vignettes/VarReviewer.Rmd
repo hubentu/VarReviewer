@@ -1,0 +1,45 @@
+---
+title: "VarReviewer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VarReviewer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(VarReviewer)
+library(BSgenome.Hsapiens.1000genomes.hs37d5)
+```
+
+# View BAM for a variant
+```{r}
+bam <- system.file("extdata", "test.bam", package="VarReviewer")
+vcf <- system.file("extdata", "test.vcf", package="VarReviewer")
+v1 <- readVcf(vcf)
+```
+
+```{r, eval=FALSE}
+viewAligns(rowRanges(v1), bam)
+```
+
+# Re-align BAM and VCF to SE
+## Re-align counts
+
+```{r}
+rse <- reAlign(rowRanges(v1), bam)
+assays(rse)$ADP[1,1][[1]]
+```
+
+## View alignments
+```{r, eval=FALSE}
+aln <- assays(rse)$Align[1,1][[1]]
+viewAligns(aligns = aln, bamParam=list(tag="YC"))
+```

@@ -1,0 +1,16 @@
+Package: VarReview
+Title: Variant Review
+Version: 0.0.1
+Authors@R: person("Qiang", "Hu", email = "qiang.hu@roswellpark.org", role = c("aut", "cre"))
+Description: A package to help to review variants with BAMs and check indels by local realignments.
+Depends: R (>= 3.6.0), VariantAnnotation, GenomicFiles, igvR
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
+Imports: SummarizedExperiment, Biostrings, S4Vectors, grDevices
+
