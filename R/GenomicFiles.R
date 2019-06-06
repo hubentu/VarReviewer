@@ -33,11 +33,6 @@ readsOut <- function(reads, bam.out){
 ##     verIndel(range, bam = file, ...)
 ## }
 
-
-#' VerINDEL
-#'
-#' verIndel wrapped by GenomicFiles
-#' 
 VerINDEL <- function(vranges, bams, outDir, genome=BSgenome.Hsapiens.1000genomes.hs37d5, reduceBy=c("file", "range"),  ...){
     reduceBy <- match.arg(reduceBy, c("file", "range"))
     if(reduceBy=="file"){

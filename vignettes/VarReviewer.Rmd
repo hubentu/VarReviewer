@@ -14,8 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(VarReviewer)
+```{r}
+suppressPackageStartupMessages(
+    library(VarReviewer)
+)
 library(BSgenome.Hsapiens.1000genomes.hs37d5)
 ```
 
@@ -30,16 +32,29 @@ v1 <- readVcf(vcf)
 viewAligns(rowRanges(v1), bam)
 ```
 
+![](viewBam.png){width=600px}
+
 # Re-align BAM and VCF to SE
+
 ## Re-align counts
+
+To realign reads locally to reference and alternative sequences for
+given variant.
 
 ```{r}
 rse <- reAlign(rowRanges(v1), bam)
+rse
 assays(rse)$ADP[1,1][[1]]
 ```
 
 ## View alignments
+
+A "YC" tag will be added to the outputs to label reads with different
+alignments using different colors.
+
 ```{r, eval=FALSE}
 aln <- assays(rse)$Align[1,1][[1]]
 viewAligns(aligns = aln, bamParam=list(tag="YC"))
 ```
+
+![](viewAlign.png){width=600px}

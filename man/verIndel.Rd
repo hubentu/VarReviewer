@@ -8,6 +8,23 @@ verIndel(range, Ref = NULL, Alt = NULL, bam,
   genome = BSgenome.Hsapiens.1000genomes.hs37d5, mapq = 20,
   baseQ13 = NULL, trim.softclip = FALSE)
 }
+\arguments{
+\item{range}{A Ranges object.}
+
+\item{Ref}{Reference allele.}
+
+\item{Alt}{Alt alleles.}
+
+\item{bam}{BAM file.}
+
+\item{genome}{Reference genome file or BSgnome object.}
+
+\item{mapq}{mapping quality score.}
+
+\item{baseQ13}{base quality score.}
+
+\item{trim.softclip}{whether to realign softclip reads.}
+}
 \description{
 Verify Indel alignments
 }

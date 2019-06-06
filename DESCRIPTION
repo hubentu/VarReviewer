@@ -1,5 +1,5 @@
-Package: VarReview
-Title: Variant Review
+Package: VarReviewer
+Title: Variant Reviewer
 Version: 0.0.1
 Authors@R: person("Qiang", "Hu", email = "qiang.hu@roswellpark.org", role = c("aut", "cre"))
 Description: A package to help to review variants with BAMs and check indels by local realignments.
@@ -12,5 +12,5 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
-Imports: SummarizedExperiment, Biostrings, S4Vectors, grDevices
+Imports: SummarizedExperiment, Biostrings, S4Vectors, grDevices, methods
 

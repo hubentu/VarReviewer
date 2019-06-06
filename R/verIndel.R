@@ -1,6 +1,16 @@
 #' Verify Indel alignments
+#'
+#' @param range A Ranges object.
+#' @param Ref Reference allele.
+#' @param Alt Alt alleles.
+#' @param bam BAM file.
+#' @param genome Reference genome file or BSgnome object.
+#' @param mapq mapping quality score.
+#' @param baseQ13 base quality score.
+#' @param trim.softclip whether to realign softclip reads.
 #' @importFrom S4Vectors elementMetadata
 #' @import VariantAnnotation
+#' @import GenomicRanges
 #' @export
 
 verIndel <- function(range, Ref = NULL, Alt = NULL, bam, genome=BSgenome.Hsapiens.1000genomes.hs37d5, mapq=20, baseQ13=NULL, trim.softclip=FALSE){
@@ -25,7 +35,7 @@ verIndel <- function(range, Ref = NULL, Alt = NULL, bam, genome=BSgenome.Hsapien
     v1e <- VariantAnnotation::expand(vrange)
     ## check repeat regions
     v1rg <- lapply(v1e, repReg, genome)
-    v1rg <- GenomicRanges::reduce(unlist(GRangesList(v1rg)))
+    v1rg <- reduce(unlist(GRangesList(v1rg)))
 
     ## load reads
     param <- ScanBamParam(which=v1rg,
@@ -49,15 +59,15 @@ verIndel <- function(range, Ref = NULL, Alt = NULL, bam, genome=BSgenome.Hsapien
             AlnCheck(aln$Alt[[x]], range=aln$aRange[x])
         })
         F <- cbind(f.ref, do.call(cbind, f.alt))
-        colnames(F) <- as.character(c(VariantAnnotation::ref(vrange),
-                                      unlist(VariantAnnotation::alt(vrange))))
+        colnames(F) <- as.character(c(ref(vrange),
+                                      unlist(alt(vrange))))
         ## update cigar
         reads <- mCigar(aln, F, reads)
     }else{
         F <- data.frame(matrix(logical(), 0,
-                               lengths(VariantAnnotation::alt(vrange)) + 1))
-        colnames(F) <- as.character(c(VariantAnnotation::ref(vrange),
-                                      unlist(VariantAnnotation::alt(vrange))))
+                               lengths(alt(vrange)) + 1))
+        colnames(F) <- as.character(c(ref(vrange),
+                                      unlist(alt(vrange))))
     }
 
     ## ## export BAM
@@ -70,7 +80,7 @@ verIndel <- function(range, Ref = NULL, Alt = NULL, bam, genome=BSgenome.Hsapien
     ##     rtracklayer::export(reads, BamFile(bam.out), format="bam")
     ## }
 
-    mcols(reads) <- S4Vectors::DataFrame(mcols(reads), F)
+    mcols(reads) <- DataFrame(mcols(reads), F)
     return(reads)
 }
 

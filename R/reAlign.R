@@ -42,8 +42,8 @@ reAlign <- function(var, bam, genome = BSgenome.Hsapiens.1000genomes.hs37d5,
                 ref <- as.character(var$REF)[j]
                 alts <- as.character(as.list(var$ALT)[[j]])
                 seqs <- c(ref, alts)
-                cols <- apply(col2rgb(rainbow(length(seqs))), 2,
-                              paste, collapse=",")
+                cols <- apply(col2rgb(c("grey20", rainbow(length(alts)))),
+                              2, paste, collapse=",")
                 for(s in seq(seqs)){
                     a1 <- which(elementMetadata(y)[[seqs[s]]])
                     elementMetadata(y)$YC[a1] <- cols[s]
